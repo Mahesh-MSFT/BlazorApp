@@ -1,0 +1,30 @@
+﻿@page "/"
+@using System.Threading;
+
+    <h1>Current Server: @serverName</h1>
+    <h1>Current Time: @currentDate</h1>
+
+
+    @functions {
+        string serverName;
+        string currentDate;
+
+
+        protected override void OnInit()
+        {
+            StartCountdown();
+        }
+
+        void StartCountdown()
+        {
+            var timer = new Timer(new TimerCallback(_ =>
+            {
+                serverName = Environment.MachineName;
+                currentDate = DateTime.UtcNow.ToLocalTime().ToString();
+
+                this.StateHasChanged();
+
+            }), null, 1000, 1000);
+        }
+
+    }
